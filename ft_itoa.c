@@ -18,43 +18,43 @@
 //	- Negative numbers must be handled;
 //	- Return string representing the integer, or NULL if the allocation fails;
 
-static int	get_num_digits(int n);
+static int	get_num_digits(long n);
 
 char	*ft_itoa(int n)
 {
 	char	*pnb;
 	int		nlen;
+	long	nbr;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	nlen = get_num_digits(n);
-	pnb = malloc((nlen + 1) * sizeof(char));
+	nbr = (long)n;
+	nlen = get_num_digits(nbr);
+	pnb = ft_calloc((nlen + 1), sizeof(char));
 	if (!pnb)
 		return (NULL);
 	*(pnb + nlen) = '\0';
-	if (n < 0)
+	if (nbr < 0)
 	{
-		n *= -1;
+		nbr *= -1;
 		pnb[0] = '-';
 	}
 	while (nlen-- && *(pnb + nlen) != '-')
 	{
-		*(pnb + nlen) = n % 10 + '0';
-		n /= 10;
+		*(pnb + nlen) = nbr % 10 + '0';
+		nbr /= 10;
 	}
 	return (pnb);
 }
 
-static int	get_num_digits(int n)
+static int	get_num_digits(long nbr)
 {
 	int	count;
 
 	count = 0;
-	if (n < 0 || n == 0)
+	if (nbr < 0 || nbr == 0)
 		count++;
-	while (n != 0)
+	while (nbr != 0)
 	{
-		n /= 10;
+		nbr /= 10;
 		count++;
 	}
 	return (count);
